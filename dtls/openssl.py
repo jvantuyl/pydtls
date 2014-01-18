@@ -73,6 +73,21 @@ if sys.platform.startswith('win'):
         # If these don't exist, then let the exception propagate
         libcrypto = CDLL(release_cryptodll_path)
         libssl = CDLL(release_ssldll_path)
+elif sys.platform == 'darwin':
+    # MacOS X does not supply a new enough libssl
+    # look for HomeBrew or MacPorts
+    HOMEBREW_LIBS='/usr/local/opt/openssl/lib/'
+    MACPORTS_LIBS='/opt/local/lib'
+    if path.exists(HOMEBREW_LIBS):
+        libcrypto = CDLL(path.join(HOMEBREW_LIBS, 'libcrypto.1.0.0.dylib'))
+        libssl = CDLL(path.join(HOMEBREW_LIBS, 'libssl.1.0.0.dylib'))
+    elif path.exists(MACPORTS_LIBS):
+        libcrypto = CDLL(path.join(MACPORTS_LIBS, 'libcrypto.1.0.0.dylib'))
+        libssl = CDLL(path.join(MACPORTS_LIBS, 'libssl.1.0.0.dylib'))
+    else:
+        # try to find it in the normal link path
+        libcrypto = CDLL("libcrypto.1.0.0.dylib")
+        libssl = CDLL("libssl.1.0.0.dylib")
 else:
     libcrypto = CDLL("libcrypto.so.1.0.0")
     libssl = CDLL("libssl.so.1.0.0")

@@ -76,6 +76,13 @@ used by CPython 2.7. Installation of Microsoft redistributable runtime
 packages should therefore not be required on machines with CPython
 2.7. The version of OpenSSL distributed with PyDTLS 0.1.0 is 1.0.1c.
 
+For MacOS X, the OpenSSL comes built in, but it's too old. To use PyDTLS, it's
+necessary to build and install a newer OpenSSL version.  Since Mac's can be
+fairly sensitive to how OpenSSL is updated, systems like HomeBrew and MacPorts
+provide an environment that will more simply build it for you.  If you use
+either of these, PyDTLS will look in their default install locations for
+updated libraries.
+
 The OpenSSL version used by PyDTLS can be determined from the values
 of *sslconnection's* DTLS_OPENSSL_VERSION_NUMBER,
 DTLS_OPENSSL_VERSION, and DTLS_OPENSSL_VERSION_INFO. These variables
